@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class Pickup : MonoBehaviour
 {
     public PlayerClass player;
+    public Manager mng;
 
     public float rayLength;
     public LayerMask whatToHit; //LayerMask onde apenas o lixo deve ser selecionado
@@ -57,6 +58,7 @@ public class Pickup : MonoBehaviour
             if (player.inventory[i] == trashType)
             {
                 player.inventory[i] = "";
+                player.score++;
             }
         }
     }
