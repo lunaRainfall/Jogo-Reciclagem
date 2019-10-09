@@ -4,31 +4,28 @@ using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
-    public PlayerClass player;
+    public float minSpawnRate = 1f;
+    public float maxSpawnRate = 5f;
+    public GameObject[] trashToBeSpawned;
+    private float spawnRate = 0f;
+    private Vector3 spawnLocation;
 
-    public string[] trashTypes = new string[4];
+    IEnumerator SpawnTrash()
+    {
+        spawnLocation = new Vector3(Random.Range(0.0f, 150.0f), 5, Random.Range(0.0f, 150.0f));
+        Instantiate(trashToBeSpawned[Random.Range(0, trashToBeSpawned.Length)], spawnLocation, Quaternion.identity);
+        spawnRate = Random.Range(minSpawnRate, maxSpawnRate);
+        yield return new WaitForSeconds(spawnRate);
+        StartCoroutine(SpawnTrash());
+    }
     
     void Start()
     {
-        
+        StartCoroutine(SpawnTrash());
     }
 
     void Update()
     {
         
-    }
-
-    public void CheckTrash()
-    {
-        for(int i = 0; i < trashTypes.Length; i++)
-        {
-            for(int j = 0; i < player.inventory.Length; j++)
-            {
-                if (trashTypes[i] == player.inventory[j])
-                {
-                    player.trashAmount[i]++;
-                }
-            }
-        }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class Pickup : MonoBehaviour
 {
     public PlayerClass player;
-    public Manager mng;
+    //public Manager mng;
 
     public float rayLength;
     public LayerMask whatToHit; //LayerMask onde apenas o lixo deve ser selecionado
@@ -14,7 +14,6 @@ public class Pickup : MonoBehaviour
 
     void Start()
     {
- 
     }
 
     void Update()
@@ -46,6 +45,29 @@ public class Pickup : MonoBehaviour
             {
                 player.inventory[i] = hitObject.tag;
                 Destroy(hitObject);
+                switch (hitObject.tag)
+                {
+                    case "Metal":
+                        player.trashAmount[0]++;
+                        break;
+
+                    case "Vidro":
+                        player.trashAmount[1]++;
+                        break;
+
+                    case "Papel":
+                        player.trashAmount[2]++;
+                        break;
+
+                    case "Plastico":
+                        player.trashAmount[3]++;
+                        break;
+
+                    default:
+                        Debug.Log("tu é uma anta provavelmente");
+                        break;
+                }
+                Debug.Log(player.trashAmount[0]);
                 break;
             }
         }
@@ -59,8 +81,45 @@ public class Pickup : MonoBehaviour
             {
                 player.inventory[i] = "";
                 player.score++;
+                switch (trashType)
+                {
+                    case "Metal":
+                        player.trashAmount[0] = 0;
+                        break;
+
+                    case "Vidro":
+                        player.trashAmount[1] = 0;
+                        break;
+
+                    case "Papel":
+                        player.trashAmount[2] = 0;
+                        break;
+
+                    case "Plastico":
+                        player.trashAmount[3] = 0;
+                        break;
+
+                    default:
+                        Debug.Log("do you are have stupid?");
+                        break;
+                }
             }
         }
     }
 }
 //780 1280
+
+
+    // quem precisa de bloco de notas xDDDD
+    // sumario
+    /// caragglio
+    /// mto pyka
+    /// e agora?
+    /// 
+    /// montar a cena
+    /// spawn de lixo aleatorio (done!)
+    /// desafios
+    /// UI
+    /// menu/tela de instrução né
+    /// som na caixa
+    /// 
