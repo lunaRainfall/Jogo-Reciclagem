@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 public class Pickup : MonoBehaviour
 {
     public PlayerClass player;
-    //public Manager mng;
+    public WorldClass world;
+    public UI uiScript;
 
     public float rayLength;
     public LayerMask whatToHit; //LayerMask onde apenas o lixo deve ser selecionado
@@ -14,6 +15,7 @@ public class Pickup : MonoBehaviour
 
     void Start()
     {
+
     }
 
     void Update()
@@ -31,7 +33,6 @@ public class Pickup : MonoBehaviour
                 else // Se não, é um lixo
                 {
                     ChangeTrashCount(hit.collider.gameObject);
-                    Debug.Log(hit.collider.tag);
                 }
             }
         }
@@ -39,35 +40,45 @@ public class Pickup : MonoBehaviour
 
     public void ChangeTrashCount(GameObject hitObject)
     {
+        if (player.actualInventory == 10)
+        {
+            uiScript.FullInventoryAlert();
+        }
+
         for (int i = 0; i < player.inventory.Length; i++)
         {
             if (player.inventory[i] == "")
             {
                 player.inventory[i] = hitObject.tag;
-                Destroy(hitObject);
+                player.actualInventory++;
+                hitObject.transform.position = new Vector3(transform.position.x, -200, transform.position.z);
+                Destroy(hitObject, 0.1f);
                 switch (hitObject.tag)
                 {
                     case "Metal":
                         player.trashAmount[0]++;
+                        uiScript.trashInInventory[0]++;
                         break;
 
                     case "Vidro":
                         player.trashAmount[1]++;
+                        uiScript.trashInInventory[1]++;
                         break;
 
                     case "Papel":
                         player.trashAmount[2]++;
+                        uiScript.trashInInventory[2]++;
                         break;
 
                     case "Plastico":
                         player.trashAmount[3]++;
+                        uiScript.trashInInventory[3]++;
                         break;
 
                     default:
                         Debug.Log("tu é uma anta provavelmente");
                         break;
                 }
-                Debug.Log(player.trashAmount[0]);
                 break;
             }
         }
@@ -81,22 +92,27 @@ public class Pickup : MonoBehaviour
             {
                 player.inventory[i] = "";
                 player.score++;
+                player.actualInventory--;
                 switch (trashType)
                 {
                     case "Metal":
                         player.trashAmount[0] = 0;
+                        uiScript.trashInInventory[0] = 0;
                         break;
 
                     case "Vidro":
                         player.trashAmount[1] = 0;
+                        uiScript.trashInInventory[1] = 0;
                         break;
 
                     case "Papel":
                         player.trashAmount[2] = 0;
+                        uiScript.trashInInventory[2] = 0;
                         break;
 
                     case "Plastico":
                         player.trashAmount[3] = 0;
+                        uiScript.trashInInventory[3] = 0;
                         break;
 
                     default:
@@ -106,8 +122,13 @@ public class Pickup : MonoBehaviour
             }
         }
     }
+
+    public void CheckPosition(GameObject hitObject)
+    {
+
+    }
 }
-//780 1280
+//780 1280 17
 
 
     // quem precisa de bloco de notas xDDDD

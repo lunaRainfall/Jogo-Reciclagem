@@ -12,8 +12,11 @@ public class Manager : MonoBehaviour
 
     IEnumerator SpawnTrash()
     {
-        spawnLocation = new Vector3(Random.Range(0.0f, 150.0f), 5, Random.Range(0.0f, 150.0f));
-        Instantiate(trashToBeSpawned[Random.Range(0, trashToBeSpawned.Length)], spawnLocation, Quaternion.identity);
+        GameObject trash;
+        spawnLocation = new Vector3(Random.Range(0.0f, 150.0f), 11, Random.Range(0.0f, 150.0f));
+        trash = Instantiate(trashToBeSpawned[Random.Range(0, trashToBeSpawned.Length)], spawnLocation, Quaternion.identity);
+        trash.GetComponent<Rigidbody>().AddTorque(transform.right * Random.Range(40f, 300f));
+        trash.GetComponent<Rigidbody>().AddTorque(transform.up * Random.Range(40f, 150f));
         spawnRate = Random.Range(minSpawnRate, maxSpawnRate);
         yield return new WaitForSeconds(spawnRate);
         StartCoroutine(SpawnTrash());

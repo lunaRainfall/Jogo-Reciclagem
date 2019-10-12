@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Drop : MonoBehaviour
 {
-    public PlayerClass player;
+   /* public PlayerClass player;
     //public string trashType;
 
     public void DeployTrash(string trashType)
@@ -17,5 +17,5 @@ public class Drop : MonoBehaviour
                 break;
             }
         }
-    }
+    }*/
 }
